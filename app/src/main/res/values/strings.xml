@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Nike Weather</string>
+
+
+    <string name="title_current">Current</string>
+    <string name="title_forecast">Forecast</string>
+
+    <string name="na">N</string>
+    <string name="wind">Wind</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_exit">Exit</string>
+
+</resources>
