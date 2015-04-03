@@ -96,7 +96,7 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
             else
                 return getPrefs(mContext,Constants.PREFS_MJSON);
         }
-        return null;
+        return getPrefs(mContext,Constants.PREFS_MJSON);
     }
 
     private String assembledURL() {

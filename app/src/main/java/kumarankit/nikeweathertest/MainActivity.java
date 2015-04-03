@@ -77,7 +77,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         AlarmManager alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,5000, AlarmManager.INTERVAL_HALF_HOUR, pendingIntent);
+        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,5000,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);//using 5 minutes as we need 30 minute checks and delay might be a full alarm cycle due to "inexact"
     }
 
     @Override
