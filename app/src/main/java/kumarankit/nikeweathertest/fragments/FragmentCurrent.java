@@ -19,14 +19,14 @@ import kumarankit.nikeweathertest.weatherinfo.WeatherFetch;
  * Current Weather fragment
  */
 public class FragmentCurrent extends Fragment {
-    private TextView tvCurrentTemp;
-    private TextView tvCurrentTempUnit;
-    private TextView tvCurrentWeatherText;
-    private TextView tvCurrentHumidity;
-    private TextView tvCurrentPressure;
-    private TextView tvCurrentWind;
-    private ImageView ivCurrentWeatherImage;
-    CurrentWeather currentWeather;
+    private static TextView tvCurrentTemp;
+    private static TextView tvCurrentTempUnit;
+    private static TextView tvCurrentWeatherText;
+    private static TextView tvCurrentHumidity;
+    private static TextView tvCurrentPressure;
+    private static TextView tvCurrentWind;
+    private static ImageView ivCurrentWeatherImage;
+    private static CurrentWeather currentWeather;
     public FragmentCurrent()
     {
     }
@@ -52,7 +52,7 @@ public class FragmentCurrent extends Fragment {
         updateView();
     }
 
-    private void updateView(){
+    public static void updateView(){
 
         currentWeather = WeatherFetch.weather.getCurrentWeather();
 

@@ -22,6 +22,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 
+import kumarankit.nikeweathertest.fragments.FragmentCurrent;
+import kumarankit.nikeweathertest.fragments.FragmentForecast;
+import kumarankit.nikeweathertest.util.Constants;
+
 /**
  * Created by Ankit on 4/2/2015.
  * AsyncTask to fetch weather data
@@ -32,7 +36,6 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
     private static final String WEB_SERVICE_UAC = "KDrRbvwbAt";//Given in requirements
     private static final String WEB_REQUEST_FORMAT = "json";//Given in requirements
     private static final String WEB_REQUEST_ZIPCODE = "97006";//Given in requirements
-    private static final String PREFS_NAME = "NikeWeatherPrefs";
     private static final Long TIME_CHECK = 1800000L;
 
     private Context mContext;
@@ -43,13 +46,15 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Toast.makeText(mContext, "Last Updated at: " + mContext.getSharedPreferences("NikeWeatherPrefs", mContext.MODE_PRIVATE).getString("lastUpdated", ""), Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Last Updated at: " + mContext.getSharedPreferences(Constants.PREFS_NAME, mContext.MODE_PRIVATE).getString(Constants.PREFS_LAST_UPDATED, ""), Toast.LENGTH_LONG).show();
+        FragmentCurrent.updateView();
+        FragmentForecast.updateView();
     }
 
     @Override
     protected String doInBackground(String... params) {
         String lastUpdatedTime = "123";
-        if((lastUpdatedTime=getPrefs(mContext,"lastUpdatedTime"))!=null || isFirstTime(mContext)) {
+        if((lastUpdatedTime=getPrefs(mContext,Constants.PREFS_LAST_UPDATED_TIME))!="" || isFirstTime(mContext)) {
             if(lastUpdatedTime==null)
             lastUpdatedTime = "123";
             long currentTime = System.currentTimeMillis();
@@ -83,13 +88,13 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                putPrefs(mContext, "mJson", builder.toString());
-                putPrefs(mContext,"lastUpdatedTime",""+currentTime);
-                putPrefs(mContext,"lastUpdated",""+ DateFormat.getDateTimeInstance().format(currentTime));
+                putPrefs(mContext, Constants.PREFS_MJSON, builder.toString());
+                putPrefs(mContext,Constants.PREFS_LAST_UPDATED_TIME,""+currentTime);
+                putPrefs(mContext,Constants.PREFS_LAST_UPDATED,""+ DateFormat.getDateTimeInstance().format(currentTime));
                 return builder.toString();
             }
             else
-                return getPrefs(mContext,"mJson");
+                return getPrefs(mContext,Constants.PREFS_MJSON);
         }
         return null;
     }
@@ -106,7 +111,7 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
         return builder.toString();
     }
     public void putPrefs(Context context, String key, String value) {
-        SharedPreferences weather = context.getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
+        SharedPreferences weather = context.getSharedPreferences(Constants.PREFS_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor;
         editor = weather.edit();
         editor.putString(key, value);
@@ -114,19 +119,19 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
     }
 
     public String getPrefs(Context context, String key) {
-        SharedPreferences weather = context.getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
+        SharedPreferences weather = context.getSharedPreferences(Constants.PREFS_NAME,Context.MODE_PRIVATE);
         return weather.getString(key,null);
     }
 
     public boolean isFirstTime(Context context) {
-        SharedPreferences weather = context.getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE);
+        SharedPreferences weather = context.getSharedPreferences(Constants.PREFS_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor;
-        if(weather.getBoolean("firstTime",true))
+        if(weather.getBoolean(Constants.PREFS_FIRST_TIME,true))
             return true;
         else
         {
             editor = weather.edit();
-            editor.putBoolean("firstTime", false);
+            editor.putBoolean(Constants.PREFS_FIRST_TIME, false);
             editor.apply();
         }
         return false;

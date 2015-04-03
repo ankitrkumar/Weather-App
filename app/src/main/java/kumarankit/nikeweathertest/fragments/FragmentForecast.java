@@ -20,19 +20,19 @@ import kumarankit.nikeweathertest.weatherinfo.WeatherFetch;
  */
 public class FragmentForecast extends Fragment{
 
-    private TextView tvForecastDayTemp;
-    private TextView tvForecastNightTemp;
+    private static TextView tvForecastDayTemp;
+    private static TextView tvForecastNightTemp;
 
-    private TextView tvForecastDayWeatherText;
-    private TextView tvForecastNightWeatherText;
+    private static TextView tvForecastDayWeatherText;
+    private static TextView tvForecastNightWeatherText;
 
-    private TextView tvForecastDayWind;
-    private TextView tvForecastNightWind;
+    private static TextView tvForecastDayWind;
+    private static TextView tvForecastNightWind;
 
-    private ImageView ivForecastDayImage;
-    private ImageView ivForecastNightImage;
+    private static ImageView ivForecastDayImage;
+    private static ImageView ivForecastNightImage;
 
-    ForecastWeather forecastWeather;
+    private static ForecastWeather forecastWeather;
 
     public FragmentForecast()
     {
@@ -63,7 +63,7 @@ public class FragmentForecast extends Fragment{
         updateView();
     }
 
-    private void updateView(){
+    public static void updateView(){
 
         forecastWeather = WeatherFetch.weather.getForecastWeather();
         if(forecastWeather!=null) {

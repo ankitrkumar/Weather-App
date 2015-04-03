@@ -61,7 +61,7 @@ public class Weather {
         getJSONdata();
 
     }
-    private void getJSONdata()//deserialize the data obtained from the server
+    private void getJSONdata()
     {
         try {
             JSONObject jsonObject = new JSONObject(mJson);
