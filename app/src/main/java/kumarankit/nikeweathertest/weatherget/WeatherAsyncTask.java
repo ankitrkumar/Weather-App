@@ -80,6 +80,7 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
                         while ((line = reader.readLine()) != null) {
                             builder.append(line);
                         }
+                        putPrefs(mContext, Constants.PREFS_MJSON, builder.toString());
                     }
                 } catch (ClientProtocolException e) {
                     e.printStackTrace();
@@ -88,7 +89,6 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                putPrefs(mContext, Constants.PREFS_MJSON, builder.toString());
                 putPrefs(mContext,Constants.PREFS_LAST_UPDATED_TIME,""+currentTime);
                 putPrefs(mContext,Constants.PREFS_LAST_UPDATED,""+ DateFormat.getDateTimeInstance().format(currentTime));
                 return builder.toString();
