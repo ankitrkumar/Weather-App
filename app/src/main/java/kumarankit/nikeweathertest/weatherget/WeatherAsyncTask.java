@@ -58,7 +58,6 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
             if(lastUpdatedTime==null)
             lastUpdatedTime = "123";
             long currentTime = System.currentTimeMillis();
-
             if((currentTime-Long.parseLong(lastUpdatedTime)) > TIME_CHECK) {
                 //then do  the doInBackground else return the json string that was stored
                 StringBuilder builder = new StringBuilder();
@@ -81,6 +80,8 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
                             builder.append(line);
                         }
                         putPrefs(mContext, Constants.PREFS_MJSON, builder.toString());
+                        putPrefs(mContext,Constants.PREFS_LAST_UPDATED_TIME,""+currentTime);
+                        putPrefs(mContext,Constants.PREFS_LAST_UPDATED,""+ DateFormat.getDateTimeInstance().format(currentTime));
                     }
                 } catch (ClientProtocolException e) {
                     e.printStackTrace();
@@ -89,8 +90,6 @@ public class WeatherAsyncTask extends AsyncTask<String, Void, String> {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                putPrefs(mContext,Constants.PREFS_LAST_UPDATED_TIME,""+currentTime);
-                putPrefs(mContext,Constants.PREFS_LAST_UPDATED,""+ DateFormat.getDateTimeInstance().format(currentTime));
                 return builder.toString();
             }
             else
